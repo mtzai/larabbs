@@ -37,6 +37,9 @@
             ⋅
             <i class="far fa-comment"></i>
             {{ $topic->reply_count }}
+            ⋅
+            <i class="far fa-user-circle"></i>
+            作者：{{ $topic->user->name }}
           </div>
 
           <div class="topic-body mt-4 mb-4">
@@ -67,7 +70,7 @@
       {{-- 用户回复列表 --}}
       <div class="card topic-reply mt-4">
         <div class="card-body">
-          @include('topics._reply_box', ['topic' => $topic])
+          @includeWhen(Auth::check(), 'topics._reply_box', ['topic' => $topic])
           @include('topics._reply_list', ['replies' => $topic->replies()->with('user')->get()])
         </div>
       </div>
